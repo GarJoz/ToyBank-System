@@ -1,20 +1,367 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Basic Express 2010
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BankAPP", "BankAPP\BankAPP.vbproj", "{05878A0A-2F60-401A-A485-C95E5CD3DD57}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x86 = Debug|x86
-		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{05878A0A-2F60-401A-A485-C95E5CD3DD57}.Debug|x86.ActiveCfg = Debug|x86
-		{05878A0A-2F60-401A-A485-C95E5CD3DD57}.Debug|x86.Build.0 = Debug|x86
-		{05878A0A-2F60-401A-A485-C95E5CD3DD57}.Release|x86.ActiveCfg = Release|x86
-		{05878A0A-2F60-401A-A485-C95E5CD3DD57}.Release|x86.Build.0 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+Module Module1
+    Dim TotalM, TotalR As Double
+
+    Sub Main()
+        Dim NIP, NIPR As String
+        Dim Attempt, MenuO As Integer
+        Dim Log, MenuS As Boolean
+        TotalM = 50000
+        TotalR = 6000
+        Attempt = 0
+        NIPR = "0000"
+        Log = False
+        MenuS = True
+        Do
+            If Attempt >= 2 Then
+                Log = True
+            End If
+            Console.WriteLine("Introduzca su NIP")
+            NIP = Console.ReadLine()
+            If (NIPR = NIP) Then
+                Console.WriteLine("Bienvenido ")
+                Log = True
+            Else
+                Console.WriteLine("Contraseña o Usuario Incorrecto")
+                Attempt = Attempt + 1
+            End If
+        Loop While Log = False
+        If Attempt >= 3 Then
+            Console.WriteLine("Has excedido el numero de intentos, saliendo del programa...")
+            Console.ReadLine()
+        End If
+        If Attempt <= 2 Then
+            While MenuS = True
+                Console.WriteLine("¿Que operación va a realizar?:")
+                Console.WriteLine("1.Consulta de Saldo")
+                Console.WriteLine("2.Retiro de Efectivo")
+                Console.WriteLine("3.Pago de Servicios")
+                Console.WriteLine("4.Descripción de las operaciones")
+                Console.WriteLine("5.Salir")
+                MenuO = Console.ReadLine()
+                Select Case MenuO
+                    Case 1
+                        Console.WriteLine("Su saldo al día es de: ${0}", TotalM)
+                        Console.WriteLine("Desea realizar otra funcion?")
+                        Console.WriteLine("1.Si")
+                        Console.WriteLine("0.No")
+                        MenuS = Console.ReadLine()
+
+                    Case 2
+                        Cash()
+                        Console.WriteLine("Desea realizar otra funcion?")
+                        Console.WriteLine("1.Si")
+                        Console.WriteLine("0.No")
+                        MenuS = Console.ReadLine()
+
+                    Case 3
+                        PayServices()
+                        Console.WriteLine("Desea realizar otra funcion?")
+                        Console.WriteLine("1.Si")
+                        Console.WriteLine("0.No")
+                        MenuS = Console.ReadLine()
+                    Case 4
+                        Rules()
+                    Case 5
+                        MenuS = False
+                    Case Else
+                        Console.WriteLine("Esa no es una funcion valida")
+                        Console.WriteLine("Desea realizar alguna funcion?")
+                        Console.WriteLine("1.Si")
+                        Console.WriteLine("0.No")
+                        MenuS = Console.ReadLine()
+
+
+                End Select
+            End While
+        End If
+        Console.WriteLine("Tenga un Buen dia")
+        Console.ReadLine()
+    End Sub
+    Private Function Rules()
+        Dim Reading As Boolean
+        Dim Desc As Integer
+        Reading = True
+        While Reading = True
+            Console.WriteLine("-----------Descripción de las Operaciones-----------")
+            Console.WriteLine("Elija la operación que desea conocer")
+            Console.WriteLine("1.Consulta de Saldo")
+            Console.WriteLine("2.Retiro de Efectivo")
+            Console.WriteLine("3.Pago de Servicios")
+            Console.WriteLine("4.Salir del menú de descripciones")
+            Desc = Console.ReadLine()
+            Select Case Desc
+                Case 1
+                    Console.WriteLine("----------Descripción: Consulta de Saldo----------")
+                    Console.WriteLine("La operación Consulta de saldo permite ver el dinero disponible")
+                    Console.WriteLine("en la cuenta")
+                    Console.WriteLine("")
+                    Console.WriteLine("Desea leer otra operacion?")
+                    Console.WriteLine("1.Si")
+                    Console.WriteLine("0.No")
+                    Reading = Console.ReadLine()
+                Case 2
+                    Console.WriteLine("----------Descripción: Retiro----------")
+                    Console.WriteLine("La operación Retiro permite sacar dinero efectivo del cajero")
+                    Console.WriteLine("Sujeto a las siguientes normas:")
+                    Console.WriteLine("1.Monto maximo de retiro por día: $16000.00")
+                    Console.WriteLine("2.Las transacciones personalizadas deben ser multiplos de 100")
+                    Console.WriteLine("")
+                    Console.WriteLine("Desea leer otra operacion?")
+                    Console.WriteLine("1.Si")
+                    Console.WriteLine("0.No")
+                    Reading = Console.ReadLine()
+                Case 3
+                    Console.WriteLine("----------Descripción: Pago de Servicios----------")
+                    Console.WriteLine("La operación Pago de Servicios permite pagar los siguientes servicios:")
+                    Console.WriteLine("1.Netflix")
+                    Console.WriteLine("2.Amazon Prime")
+                    Console.WriteLine("3.Telmex")
+                    Console.WriteLine("4.Spotify")
+                    Console.WriteLine("5.Telcel")
+                    Console.WriteLine("")
+                    Console.WriteLine("Desea leer otra operacion?")
+                    Console.WriteLine("1.Si")
+                    Console.WriteLine("0.No")
+                    Reading = Console.ReadLine()
+                Case 4
+                    Reading = False
+                Case Else
+                    Console.WriteLine("Esa no es una opcion valida")
+                    Console.WriteLine("Desea leer una operacion?")
+                    Console.WriteLine("1.Si")
+                    Console.WriteLine("0.No")
+                    Reading = Console.ReadLine()
+            End Select
+        End While
+    End Function
+    Private Function PayServices()
+        Dim Cost As Double
+        Dim Confirm As Boolean
+        Dim NumSer As Integer
+        Dim ServiceN As String
+        Console.WriteLine("Que servicio desea pagar?")
+        Console.WriteLine("1.Netflix")
+        Console.WriteLine("2.Amazon Prime")
+        Console.WriteLine("3.Telmex")
+        Console.WriteLine("4.Spotify")
+        Console.WriteLine("5.Telcel")
+        NumSer = Console.ReadLine()
+        Select Case NumSer
+            Case 1
+                Cost = 129
+                ServiceN = "Netflix"
+                If TotalM > Cost Then
+                    Console.WriteLine("Esta seguro de que desea pagar {0}", ServiceN)
+                    Console.WriteLine("1.si")
+                    Console.WriteLine("0.No")
+                    Confirm = Console.ReadLine()
+                    If Confirm = True Then
+                        Console.WriteLine("Transacción Exitosa")
+                        Console.WriteLine("Saldo previo: ${0}", TotalM)
+                        TotalM = TotalM - Cost
+                        Console.WriteLine("Su Saldo actualizado es de: ${0}", TotalM)
+                    Else
+                        Console.WriteLine("Regresando al Menu Principal...")
+                        Console.WriteLine("")
+                    End If
+                Else
+                    Console.WriteLine("Saldo insuficiente")
+                End If
+            Case 2
+                Cost = 99
+                ServiceN = "Amazon Prime"
+                If TotalM > Cost Then
+                    Console.WriteLine("Esta seguro de que desea pagar {0}", ServiceN)
+                    Console.WriteLine("1.si")
+                    Console.WriteLine("0.No")
+                    Confirm = Console.ReadLine()
+                    If Confirm = True Then
+                        Console.WriteLine("Transacción Exitosa")
+                        Console.WriteLine("Saldo previo: ${0}", TotalM)
+                        TotalM = TotalM - Cost
+                        Console.WriteLine("Su Saldo actualizado es de: ${0}", TotalM)
+                    Else
+                        Console.WriteLine("Regresando al Menu Principal...")
+                        Console.WriteLine("")
+                    End If
+                Else
+                End If
+                Console.WriteLine("Saldo insuficiente")
+            Case 3
+                Cost = 299
+                ServiceN = "Telmex"
+                If TotalM > Cost Then
+                    Console.WriteLine("Esta seguro de que desea pagar {0}", ServiceN)
+                    Console.WriteLine("1.si")
+                    Console.WriteLine("0.No")
+                    Confirm = Console.ReadLine()
+                    If Confirm = True Then
+                        Console.WriteLine("Transacción Exitosa")
+                        Console.WriteLine("Saldo previo: ${0}", TotalM)
+                        TotalM = TotalM - Cost
+                        Console.WriteLine("Su Saldo actualizado es de: ${0}", TotalM)
+                    Else
+                        Console.WriteLine("Regresando al Menu Principal...")
+                        Console.WriteLine("")
+                    End If
+                Else
+                End If
+                Console.WriteLine("Saldo insuficiente")
+            Case 4
+                Cost = 89
+                ServiceN = "Spotify"
+                If TotalM > Cost Then
+                    Console.WriteLine("Esta seguro de que desea pagar {0}", ServiceN)
+                    Console.WriteLine("1.si")
+                    Console.WriteLine("0.No")
+                    Confirm = Console.ReadLine()
+                    If Confirm = True Then
+                        Console.WriteLine("Transacción Exitosa")
+                        Console.WriteLine("Saldo previo: ${0}", TotalM)
+                        TotalM = TotalM - Cost
+                        Console.WriteLine("Su Saldo actualizado es de: ${0}", TotalM)
+                    Else
+                        Console.WriteLine("Regresando al Menu Principal...")
+                        Console.WriteLine("")
+                    End If
+                Else
+                    Console.WriteLine("Saldo insuficiente")
+                End If
+            Case 5
+                Cost = 199
+                ServiceN = "Telcel"
+                If TotalM > Cost Then
+                    Console.WriteLine("Esta seguro de que desea pagar {0}", ServiceN)
+                    Console.WriteLine("1.si")
+                    Console.WriteLine("0.No")
+                    Confirm = Console.ReadLine()
+                    If Confirm = True Then
+                        Console.WriteLine("Transacción Exitosa")
+                        Console.WriteLine("Saldo previo: ${0}", TotalM)
+                        TotalM = TotalM - Cost
+                        Console.WriteLine("Su Saldo actualizado es de: ${0}", TotalM)
+                    Else
+                        Console.WriteLine("Regresando al Menu Principal...")
+                        Console.WriteLine("")
+                    End If
+                Else
+                    Console.WriteLine("Saldo insuficiente")
+                End If
+            Case Else
+                Console.WriteLine("Ese no es un servicio valido")
+        End Select
+        Console.ReadLine()
+    End Function
+    Private Function Cash()
+        Dim Retire As Integer
+        Dim Selection As Integer
+
+        Console.WriteLine("Que cantidad desea retirar?")
+        Console.WriteLine("1.$100")
+        Console.WriteLine("2.$200")
+        Console.WriteLine("3.$500")
+        Console.WriteLine("4.$1000")
+        Console.WriteLine("5.$2000")
+        Console.WriteLine("6.$4000")
+        Console.WriteLine("7.Personalizado")
+        Console.WriteLine("8.Canelar")
+        Selection = Console.ReadLine()
+        Select Case Selection
+            Case 1
+                Retire = 100
+                If (TotalM > Retire And TotalR >= Retire) Then
+                    TotalM = TotalM - Retire
+                    TotalR = TotalR - Retire
+                    Console.WriteLine("Has recibido 1 Billete(s) de 100")
+                    Console.WriteLine("Nuevo saldo: $" & TotalM)
+                Else
+                    Console.WriteLine("No tienes Saldo Suficiente o has agotado la cantidad de retiro maximo")
+                End If
+
+            Case 2
+                Retire = 200
+                If (TotalM > Retire And TotalR >= Retire) Then
+                    TotalM = TotalM - Retire
+                    TotalR = TotalR - Retire
+                    Console.WriteLine("Has recibido 1 Billete(s) de 200")
+                    Console.WriteLine("Nuevo saldo: $" & TotalM)
+                Else
+                    Console.WriteLine("No tienes Saldo Suficiente")
+                End If
+
+            Case 3
+                Retire = 500
+                If (TotalM > Retire And TotalR >= Retire) Then
+                    TotalM = TotalM - Retire
+                    TotalR = TotalR - Retire
+                    Console.WriteLine("Has recibido 1 Billete(s) de 500")
+                    Console.WriteLine("Nuevo saldo: $" & TotalM)
+                Else
+                    Console.WriteLine("No tienes Saldo Suficiente o has agotado la cantidad de retiro maximo")
+                End If
+
+            Case 4
+                Retire = 1000
+                If (TotalM > Retire And TotalR >= Retire) Then
+                    TotalM = TotalM - Retire
+                    TotalR = TotalR - Retire
+                    Console.WriteLine("Has recibido 1 Billete(s) de 100")
+                    Console.WriteLine("Has recibido 2 Billete(s) de 200")
+                    Console.WriteLine("Has recibido 1 Billete(s) de 500")
+                    Console.WriteLine("Nuevo saldo: $" & TotalM)
+                Else
+                    Console.WriteLine("No tienes Saldo Suficiente o has agotado la cantidad de retiro maximo")
+                End If
+
+            Case 5
+                Retire = 2000
+                If (TotalM > Retire And TotalR >= Retire) Then
+                    TotalM = TotalM - Retire
+                    TotalR = TotalR - Retire
+                    Console.WriteLine("Has recibido 2 Billete(s) de 100")
+                    Console.WriteLine("Has recibido 4 Billete(s) de 200")
+                    Console.WriteLine("Has recibido 2 Billete(s) de 500")
+                    Console.WriteLine("Nuevo saldo: $" & TotalM)
+                Else
+                    Console.WriteLine("No tienes Saldo Suficiente o has agotado la cantidad de retiro maximo")
+                End If
+
+            Case 6
+                Retire = 4000
+                If (TotalM > Retire And TotalR >= Retire) Then
+                    TotalM = TotalM - Retire
+                    TotalR = TotalR - Retire
+                    Console.WriteLine("Has recibido 10 Billete(s) de 100")
+                    Console.WriteLine("Has recibido 5 Billete(s) de 200")
+                    Console.WriteLine("Has recibido 4 Billete(s) de 500")
+                    Console.WriteLine("Nuevo saldo: $" & TotalM)
+                Else
+                    Console.WriteLine("No tienes Saldo Suficiente o has agotado la cantidad de retiro maximo")
+                End If
+
+            Case 7
+                RandomCash()
+            Case 8
+                Console.WriteLine("Operación Cancelada, regresando al menu principal...")
+            Case Else
+                Console.WriteLine("Seleccion invalida, regresando al menu principal...")
+        End Select
+        Console.ReadLine()
+    End Function
+    Private Function RandomCash()
+        Dim Bill() As Integer = {100, 200, 500}
+        Dim Quantity() As Integer = {0, 0, 0}
+        Dim RRetire As Integer
+        Console.WriteLine("Ingrese la cantidad que desea retirar")
+        Console.WriteLine("(Debe ser multiplo de 100)")
+        RRetire = Console.ReadLine()
+        If ((RRetire Mod 100) > 0) Then
+            Console.WriteLine("Esa no es una cantidad válida")
+            Console.WriteLine("regresando al menú principal...")
+        Else
+            If (TotalM > RRetire And TotalR >= RRetire) Then
+
+            End If
+        End If
+    End Function
+End Module
